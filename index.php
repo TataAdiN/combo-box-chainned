@@ -7,7 +7,7 @@
         <center>
             <h4>FORM INPUT</h4>
             <form>
-                <select class="select2" style="width: 25%">
+                <select class="select2" style="width: 25%" id="provinsi">
                     <option value="">---- Pilih Provinsi ----</option>
                 <?php
                     include 'db.php';
@@ -23,10 +23,10 @@
                     }
                 ?>
                 </select><br/><br/>
-                <select class="select2" style="width: 25%">
+                <select class="select2" style="width: 25%" id="kabupaten">
                     <option value="">---- Pilih Kabupaten ----</option>
                 </select><br/><br/>
-                <select class="select2" style="width: 25%">
+                <select class="select2" style="width: 25%" id="kecamatan">
                     <option value="">---- Pilih Kecamatan ----</option>
                 </select>
             </form>
@@ -36,6 +36,34 @@
         <script>
             $(document).ready(function() {
                 $('.select2').select2()
+            });
+            $("#provinsi").change(function() {
+                var postForm = {
+                        'id': document.getElementById("provinsi").value,
+                        'op': 1
+                };
+                $.ajax({
+                    type: "post",
+                    url: "http://localhost/combo-box/wilayah.php",
+                    data: postForm,
+                    success: function(data) {
+                        $("#kabupaten").html(data);
+                    }
+                });
+            });
+            $("#kabupaten").change(function() {
+                var postForm = {
+                        'id': document.getElementById("kabupaten").value,
+                        'op': 2
+                };
+                $.ajax({
+                    type: "post",
+                    url: "http://localhost/combo-box/wilayah.php",
+                    data: postForm,
+                    success: function(data) {
+                        $("#kecamatan").html(data);
+                    }
+                });
             });
         </script>
     </body>
